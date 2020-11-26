@@ -23,7 +23,7 @@ int main(void) {
   bool apply_canny = false;
   bool apply_blur = false;
   if (image.empty()){
-    std::cout << "Could not load image" << std::endl;
+    std::cout << "Could not load image!\nPut an image in build folder and rename to sample.jpg" << std::endl;
     return -1;
   }
   cvui::init(WINDOW_NAME);

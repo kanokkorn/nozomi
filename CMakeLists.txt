@@ -7,6 +7,7 @@ if (UNIX)
     # use clang
   elseif (CMAKE_CXX_COMPILER_ID STREQUAL "gcc")
     # use gcc
+    # change if not install in ~/Documents
     set(OpenCV_DIR "~/Documents/vcpkg/installed/x64-linux/share/opencv")
     set (CMAKE_CXX_FLAGS "--std=c++14 -Ofast -Wall")
     set(CMAKE_TOOLCHAIN_FILE "~/Documents/vcpkg/scripts/buildsystem/vcpkg.cmake")
