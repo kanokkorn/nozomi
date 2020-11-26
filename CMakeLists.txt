@@ -1,16 +1,17 @@
-cmake_minimum_required(VERSION 3.1.0)
+cmake_minimum_required(VERSION 3.10.0)
 project(nozomi VERSION 0.1.0)
 
-
 # Linux config
-if (LINUX)
+if (UNIX)
   if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
     # use clang
   elseif (CMAKE_CXX_COMPILER_ID STREQUAL "gcc")
-  set (CMAKE_CXX_FLAGS "--std=c++14 -Ofast -Wall")
     # use gcc
+    set(OpenCV_DIR "~/Documents/vcpkg/installed/x64-linux/share/opencv")
+    set (CMAKE_CXX_FLAGS "--std=c++14 -Ofast -Wall")
+    set(CMAKE_TOOLCHAIN_FILE "~/Documents/vcpkg/scripts/buildsystem/vcpkg.cmake")
   endif()
-endif(LINUX)
+endif(UNIX)
 
 # Windows config
 if (WIN32)
@@ -34,6 +35,9 @@ if(OpenCV_FOUND)
   link_directories(${OpenCV_LIB_DIR})
   enable_testing()
   add_executable(nozomi main.cpp lib/cvui.h)
+  if (UNIX)
+    target_link_libraries(nozomi PRIVATE opencv_ml opencv_dnn opencv_core opencv_highgui opencv_imgproc opencv_imgcodecs)
+  endif (UNIX)
   set(CPACK_PROJECT_NAME ${PROJECT_NAME})
   set(CPACK_PROJECT_VERSION ${PROJECT_VERSION})
   include(CPack)
