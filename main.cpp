@@ -26,7 +26,6 @@ int cascade_ocl(cv::UMat);
 int main(void) {
   std::cout << "Nozomi is running...\n";
   std::cout << "using OpenCV version "<< CV_VERSION << "\n";
-  std::cout << "OpenCL support on this machine -> " << cv::ocl::haveOpenCL() << "\n";
   cv::UMat image;
   cv::imread("./sample.jpg").copyTo(image);
   if (image.empty()) {
