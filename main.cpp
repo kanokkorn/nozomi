@@ -1,63 +1,78 @@
-// standard
+/* standard */
 #include <iostream>
 
-// opencv
+/* opencv */
 #include <opencv2/core.hpp>
 #include <opencv2/highgui.hpp>
 #include <opencv2/imgproc.hpp>
 #include <opencv2/imgcodecs.hpp>
+#include <opencv2/core/mat.hpp>
 
-// cvui
-#define CVUI_IMPLEMENTATION
-#include "lib/cvui.h"
-#define WINDOW_NAME "canny edge"
+/* function declaration */
+    /* basic stuff */
+int canny_basic(cv::Mat);
+int blur_basic(cv::Mat);
 
-int show_canny(cv::Mat);
+    /* opencl stuff */
+int canny_ocl(cv::UMat);
+int blur_ocl(cv::UMat);
+int display_matrix_ocl(cv::UMat);
+int cascade_ocl(cv::UMat);
+
+    /* CUDA stuff */
+      /* TBD */
+
 
 int main(void) {
-  std::cout << "Nozooomi!" << std::endl;
-  std::cout << "using OpenCV version "<< CV_VERSION << std::endl;
-  // put sample.jpg in build folder
-  cv::Mat image =  cv::imread("./sample.jpg");
-  cv::Mat frame = image.clone();
-  bool apply_canny = false;
-  bool apply_blur = false;
-  if (image.empty()){
-    std::cout << "Could not load image!\nPut an image in build folder and rename to sample.jpg" << std::endl;
+  std::cout << "Nozomi is running...\n";
+  std::cout << "using OpenCV version "<< CV_VERSION << "\n";
+  std::cout << "OpenCL support on this machine -> " << cv::ocl::haveOpenCL() << "\n";
+  cv::UMat image;
+  cv::imread("./sample.jpg").copyTo(image);
+  if (image.empty()) {
+    std::cout << "Could not load image!\nPut an image in build folder and rename to sample.jpg\n";
     return -1;
-  }
-  cvui::init(WINDOW_NAME);
-  while(true){
-    if(apply_canny){
-      cv::cvtColor(image, frame, cv::COLOR_BGR2GRAY);
-      cv::Canny(frame, frame, 100, 200, 3);
-    } else {
-      image.copyTo(frame);
-    }
-    cvui::checkbox(frame, 15, 80, "Use canny", &apply_canny);
-    cvui::update();
-    cv::imshow(WINDOW_NAME, frame);
-    if(cv::waitKey(1) == 27){
-      std::cout << "exiting..." << std::endl;
-      break;
-    }
+  } 
+  display_matrix_ocl(image);
+  /* exit when press q */
+  if (cv::waitKey(0) == 113) {
+    std::cout << "exiting...\n";
+    cv::destroyAllWindows();
   }
   return 0;
 }
 
-int show_canny(cv::Mat image_input){
-  cv::Mat image_gray;
-  cv::Mat dst, detected_edges;
-  cv::cvtColor(image_input, image_gray, cv::COLOR_BGR2GRAY);
-  const int lowThreshold = 100;
-  const int max_lowThreshold = 200;
-  const int ratio = 3;
-  const int kernel_size = 3;
-  const char* window_name = "Edged";
-  cv::blur(image_gray, detected_edges, cv::Size(3, 3));
-  cv::Canny(detected_edges, detected_edges, lowThreshold, lowThreshold*ratio, kernel_size);
-  dst = cv::Scalar::all(0);
-  image_input.copyTo(dst, detected_edges);
-  cv::imshow(window_name, dst);
+int canny_basic(cv::Mat) {
+  return 0;
+}
+
+int blur_basic(cv::Mat) {
+  return 0;
+}
+
+/* display image as matrix in terminal */
+int display_matrix_ocl(cv::UMat image) {
+  std::cout << image << "\n";
+  return 0;
+}
+
+/* apply blur to image with 25x25 kernel size */
+int blur_ocl(cv::UMat image) {
+  cv::GaussianBlur(image, image, cv::Size(25, 25), 0);
+  cv::imshow("blur opencl", image);
+  return 0;
+}
+
+/* edge detection with canny */
+int canny_ocl(cv::UMat image) {
+  cv::UMat gray;
+  cv::cvtColor(image, gray, cv::COLOR_BGR2GRAY);
+  cv::Canny(gray, gray, 100, 200, 3);
+  cv::imshow("canny opencl", gray);
+  return 0;
+}
+
+/* HAAR cascade with opencl */
+int cascade_ocl(cv::UMat image) {
   return 0;
 }
