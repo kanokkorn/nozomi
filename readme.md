@@ -25,7 +25,7 @@ Demo opencv project using vcpkg and cmake for cross-platform compile
 3. Create ```build``` folder in project and run a command or use cmake-gui
 
 ```cmd
-cmake -l ..
+cmake .. && cmake --build .
 ```
 
 4. Build a project with Visual Studio
@@ -43,7 +43,7 @@ cmake -l ..
 3. run a command form project folder
 
 ```bash
-mkdir build && cd build && cmake -l .. && make
+mkdir build && cd build && cmake .. && cmake --build .
 ```
 
 ### NOTE
