@@ -3,7 +3,7 @@ project(nozomi VERSION 0.1.0)
 
 # Linux config
 if (UNIX)
-  if (CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+  if (CMAKE_CXX_COMPILER_ID STREQUAL "clang")
     # use clang
   elseif (CMAKE_CXX_COMPILER_ID STREQUAL "gcc")
     # use gcc
@@ -35,7 +35,7 @@ if(OpenCV_FOUND)
   include_directories(${OpenCV_INCLUDE_DIRS})
   link_directories(${OpenCV_LIB_DIR})
   enable_testing()
-  add_executable(nozomi main.cpp lib/cvui.h)
+  add_executable(nozomi main.cc lib/cvui.h)
   if (UNIX)
     target_link_libraries(nozomi PRIVATE opencv_ml opencv_dnn opencv_core opencv_highgui opencv_imgproc opencv_imgcodecs)
   endif (UNIX)

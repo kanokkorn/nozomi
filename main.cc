@@ -1,5 +1,6 @@
 // standard
 #include <iostream>
+#include <cstdlib>
 
 // opencv
 #include <opencv2/core.hpp>
@@ -14,16 +15,19 @@
 
 int show_canny(cv::Mat);
 
-int main(void) {
+int main(int argc, char** argv) {
   std::cout << "Nozooomi!" << std::endl;
   std::cout << "using OpenCV version "<< CV_VERSION << std::endl;
-  // put sample.jpg in build folder
-  cv::Mat image =  cv::imread("./sample.jpg");
+  if (argv[1] == NULL) {
+    std::cout << "no image input! aborting...\n";
+    exit(1);
+  }
+  cv::Mat image =  cv::imread(argv[1]);
   cv::Mat frame = image.clone();
   bool apply_canny = false;
   bool apply_blur = false;
   if (image.empty()){
-    std::cout << "Could not load image!\nPut an image in build folder and rename to sample.jpg" << std::endl;
+    std::cout << "Could not load image!\n" << std::endl;
     return -1;
   }
   cvui::init(WINDOW_NAME);
@@ -42,6 +46,14 @@ int main(void) {
       break;
     }
   }
+  return 0;
+}
+
+int read_camera(void){
+  cv::Mat frame;
+  cv::VideoCapture cap;
+  int deviceID = 0;
+  int apiID = cv::CAP_ANY;
   return 0;
 }
 
