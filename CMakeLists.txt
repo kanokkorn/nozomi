@@ -35,11 +35,7 @@ if(OpenCV_FOUND)
   include_directories(${OpenCV_INCLUDE_DIRS})
   link_directories(${OpenCV_LIB_DIR})
   enable_testing()
-<<<<<<< HEAD
-  add_executable(nozomi main.cc lib/cvui.h)
-=======
-  add_executable(nozomi main.cpp)
->>>>>>> b0aa5b624e1e956e290e4d318eeeea6f3e149f50
+  add_executable(nozomi main.cc)
   if (UNIX)
     target_link_libraries(nozomi PRIVATE opencv_ml opencv_dnn opencv_core opencv_highgui opencv_imgproc opencv_imgcodecs)
   endif (UNIX)
